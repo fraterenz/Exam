@@ -31,13 +31,19 @@ def describe_data(serie: pd.Series, title, nb_bins=None, kde=True, figsize=(10, 
     return df.describe().T
 
 
-def pairwise_plot(df: pd.DataFrame) -> pd.DataFrame:
+def pairwise_plot(df: pd.DataFrame, spearman=True) -> pd.DataFrame:
+    """
+    pairwise plot 
+    by default spearman correlation
+    """
     sns.set_style("darkgrid", {"axes.facecolor": ".9"})
     sns.pairplot(df)
     plt.suptitle('Pairwise plot', fontsize=20)
     plt.subplots_adjust(top=.9)
     plt.show()
-    return df.corr(method='spearman')
+    if spearman:
+        return df.corr(method='spearman')
+    return df.corr(method='pearson')
 
 
 def regression_plot(df: pd.DataFrame, col1: str, col2: str, title: str, figsize=(7, 5)):
